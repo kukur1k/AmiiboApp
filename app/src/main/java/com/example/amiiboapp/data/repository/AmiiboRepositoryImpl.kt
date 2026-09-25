@@ -3,6 +3,7 @@ package com.example.amiiboapp.data.repository
 import com.example.amiiboapp.data.remote.AmiiboRemoteDataSource
 import com.example.amiiboapp.data.local.AmiiboLocalDataSource
 import com.example.amiiboapp.domain.model.Amiibo
+import com.example.amiiboapp.domain.model.Release
 import com.example.amiiboapp.domain.repository.AmiiboRepository
 import jakarta.inject.Inject
 import okio.IOException
@@ -16,13 +17,20 @@ class AmiiboRepositoryImpl @Inject constructor(
             val remoteAmiibo = remote.fetchAmiibo().map { dto ->
                 Amiibo(
                     id = dto.id.toString(),
+                    head = dto.head,
+                    tail = dto.tail,
                     name = dto.name,
                     character = dto.character,
                     gameSeries = dto.gameSeries,
                     amiiboSeries = dto.amiiboSeries,
                     type = dto.type,
                     imageUrl = dto.imageUrl,
-                    release = dto.release,
+                    release = dto.release?.let { Release(
+                        au = it.au,
+                        eu = it.eu,
+                        jp = it.jp,
+                        na = it.na
+                    ) },
                     isFavorite = false,
                     noteId = null
                 )

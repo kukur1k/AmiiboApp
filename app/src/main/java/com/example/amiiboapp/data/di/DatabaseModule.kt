@@ -1,19 +1,30 @@
 package com.example.amiiboapp.data.di
 
-import com.example.amiiboapp.data.repository.AmiiboRepositoryImpl
-import com.example.amiiboapp.domain.repository.AmiiboRepository
-import dagger.Binds
+import android.content.Context
+import androidx.room3.Room
+import com.example.amiiboapp.data.local.AmiiboDao
+import com.example.amiiboapp.data.local.AmiiboDatabase
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
-    @Binds
+object DatabaseModule {
+
+    @Provides
     @Singleton
-    abstract fun bindAmiiboRepository(
-        impl: AmiiboRepositoryImpl
-    ): AmiiboRepository
+    fun provideDatabase(@ApplicationContext context: Context): AmiiboDatabase {
+        return Room.databaseBuilder(
+            context,
+            AmiiboDatabase::class.java,
+            "amiibo.db"
+        ).build()
+    }
+
+    @Provides
+    fun provideAmiiboDao(database: AmiiboDatabase): AmiiboDao = database.amiiboDao()
 }

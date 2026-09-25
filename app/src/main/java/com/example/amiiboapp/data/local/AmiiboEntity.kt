@@ -7,13 +7,15 @@ import androidx.room3.PrimaryKey
 
 @Entity(tableName = "amiibo",
     foreignKeys = [ForeignKey(
-        entity = NoteAmiibo::class,
+        entity = NoteAmiiboEntity::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("noteId"),
         onDelete = ForeignKey.CASCADE
     )])
 data class AmiiboEntity(
     @PrimaryKey val id: String,
+    val head: String,
+    val tail: String,
     val name: String,
     val character: String,
     val gameSeries: String,
@@ -33,7 +35,7 @@ data class ReleaseEmbedded(
 )
 
 @Entity(tableName = "note_amiibo")
-data class NoteAmiibo(
+data class NoteAmiiboEntity(
     @PrimaryKey val id: String,
 
 )

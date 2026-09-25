@@ -2,8 +2,9 @@ package com.example.amiiboapp.data.local
 
 import com.example.amiiboapp.domain.model.Amiibo
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-class AmiiboLocalDataSource(private val dao: AmiiboDao) {
+class AmiiboLocalDataSource @Inject constructor(private val dao: AmiiboDao) {
     suspend fun getCachedAmiibo(): List<Amiibo> = dao.amiiboAll().first().map { it.toDomain() }
     suspend fun hasCachedAmiibo(): Boolean = dao.count() > 0
 

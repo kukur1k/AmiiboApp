@@ -2,8 +2,9 @@ package com.example.amiiboapp.domain.usecase
 
 import com.example.amiiboapp.domain.model.Amiibo
 import com.example.amiiboapp.domain.repository.AmiiboRepository
+import javax.inject.Inject
 
-class GetSortedAmiibosUseCase (
+class GetSortedAmiibosUseCase @Inject constructor(
     private val repository: AmiiboRepository
 ){
     suspend operator fun invoke(sortBy: SortOrder): List<Amiibo> {

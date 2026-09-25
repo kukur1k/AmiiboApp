@@ -2,6 +2,8 @@ package com.example.amiiboapp.domain.model
 
 data class Amiibo(
     val id: String,
+    val head: String,
+    val tail: String,
     val name: String,
     val character: String,
     val gameSeries: String,

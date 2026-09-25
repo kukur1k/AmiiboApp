@@ -1,10 +1,12 @@
 package com.example.amiiboapp.data.local
 
+import androidx.room3.Dao
 import androidx.room3.Insert
 import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface AmiiboDao {
     @Query("SELECT * FROM amiibo")
     fun amiiboAll(): Flow<List<AmiiboEntity>>

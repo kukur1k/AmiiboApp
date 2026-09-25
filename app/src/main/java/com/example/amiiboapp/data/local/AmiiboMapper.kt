@@ -4,7 +4,9 @@ import com.example.amiiboapp.domain.model.Amiibo
 import com.example.amiiboapp.domain.model.Release
 
 fun AmiiboEntity.toDomain() = Amiibo(
-    id = id,
+    id = head + tail,
+    head = head,
+    tail =  tail,
     name = name,
     gameSeries = gameSeries,
     amiiboSeries = amiiboSeries,
@@ -23,7 +25,9 @@ fun ReleaseEmbedded.toDomain(): Release = Release(
 )
 
 fun Amiibo.toEntity() = AmiiboEntity(
-    id = id,
+    id = head + tail,
+    head = head,
+    tail = tail,
     name = name,
     gameSeries = gameSeries,
     amiiboSeries = amiiboSeries,
