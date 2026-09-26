@@ -16,7 +16,7 @@ class AmiiboRepositoryImpl @Inject constructor(
         return try{
             val remoteAmiibo = remote.fetchAmiibo().map { dto ->
                 Amiibo(
-                    id = dto.id.toString(),
+                    id = dto.head + dto.tail,
                     head = dto.head,
                     tail = dto.tail,
                     name = dto.name,
@@ -24,7 +24,7 @@ class AmiiboRepositoryImpl @Inject constructor(
                     gameSeries = dto.gameSeries,
                     amiiboSeries = dto.amiiboSeries,
                     type = dto.type,
-                    imageUrl = dto.imageUrl,
+                    imageUrl = dto.image,
                     release = dto.release?.let { Release(
                         au = it.au,
                         eu = it.eu,

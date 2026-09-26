@@ -21,7 +21,7 @@ data class AmiiboEntity(
     val gameSeries: String,
     val amiiboSeries: String,
     val type: String,
-    val imageUrl: String,
+    val image: String,
     val isFavorite: Boolean,
     @Embedded(prefix = "release_") val release: ReleaseEmbedded?,
     val noteId: String?

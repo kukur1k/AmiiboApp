@@ -12,7 +12,7 @@ fun AmiiboEntity.toDomain() = Amiibo(
     amiiboSeries = amiiboSeries,
     character = character,
     type = type,
-    imageUrl = imageUrl,
+    imageUrl = image,
     isFavorite = isFavorite,
     release = release?.toDomain()
 )
@@ -33,7 +33,7 @@ fun Amiibo.toEntity() = AmiiboEntity(
     amiiboSeries = amiiboSeries,
     character = character,
     type = type,
-    imageUrl = imageUrl,
+    image = imageUrl,
     isFavorite = isFavorite,
     release = release?.toEmbedded(),
     noteId = noteId

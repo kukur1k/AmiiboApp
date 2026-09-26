@@ -7,5 +7,5 @@ import javax.inject.Inject
 class AmiiboRemoteDataSource @Inject constructor(
     private val api: AmiiboApi
 ) {
-    suspend fun fetchAmiibo(): List<AmiiboDto> = api.getAmiibo().results
+    suspend fun fetchAmiibo(): List<AmiiboDto> = api.getAmiibo().amiibo
 }

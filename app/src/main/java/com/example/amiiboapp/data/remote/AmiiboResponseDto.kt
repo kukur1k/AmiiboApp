@@ -5,12 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AmiiboResponseDto(
-    val results: List<AmiiboDto>
+    val amiibo: List<AmiiboDto>
 )
 
 @Serializable
 data class AmiiboDto(
-    val id: Int,
     val head: String,
     val tail : String,
     val name: String,
@@ -18,7 +17,7 @@ data class AmiiboDto(
     val gameSeries: String,
     val amiiboSeries: String,
     val type: String,
-    val imageUrl: String,
+    val image: String,
     @SerialName("release")
     val release: ReleaseDto?,
 )
