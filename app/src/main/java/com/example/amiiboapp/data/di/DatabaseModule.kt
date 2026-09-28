@@ -22,7 +22,7 @@ object DatabaseModule {
             context,
             AmiiboDatabase::class.java,
             "amiibo.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides

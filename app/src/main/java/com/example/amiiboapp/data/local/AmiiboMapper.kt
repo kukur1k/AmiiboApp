@@ -35,8 +35,7 @@ fun Amiibo.toEntity() = AmiiboEntity(
     type = type,
     image = imageUrl,
     isFavorite = isFavorite,
-    release = release?.toEmbedded(),
-    noteId = noteId
+    release = release?.toEmbedded()
 )
 
 fun Release.toEmbedded(): ReleaseEmbedded = ReleaseEmbedded(

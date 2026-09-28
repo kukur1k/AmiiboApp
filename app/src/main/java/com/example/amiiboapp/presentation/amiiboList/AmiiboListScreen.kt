@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,7 +30,8 @@ fun AmiiboListScreen(viewModel: AmiiboListViewModel = hiltViewModel()) {
     AmiiboListContent(
         uiState = uiState,
         onFavoriteClick = viewModel::onFavoriteClicked,
-        onSortChange = viewModel::onSortOrderChanged
+        onSortChange = viewModel::onSortOrderChanged,
+        onAddNoteClick = viewModel::insertNote
     )
 }
 
@@ -37,6 +39,7 @@ fun AmiiboListScreen(viewModel: AmiiboListViewModel = hiltViewModel()) {
 fun AmiiboListContent(
     uiState: AmiiboListUiState,
     onFavoriteClick: (String) -> Unit,
+    onAddNoteClick: (String, String, Int) -> Unit,
     onSortChange: (SortOrder) -> Unit
 ) {
     Column() {
@@ -59,7 +62,8 @@ fun AmiiboListContent(
                 items(uiState.amiibo, key = {it.id}){ amiibo ->
                     AmiiboItem(
                         amiibo = amiibo,
-                        onFavoriteClick = {onFavoriteClick(amiibo.id)}
+                        onFavoriteClick = {onFavoriteClick(amiibo.id)},
+                        onAddNoteClick = {onAddNoteClick(amiibo.id, "Это заметка", 10)}
                     )
                 }
             }
@@ -70,7 +74,7 @@ fun AmiiboListContent(
 
 
 @Composable
-fun AmiiboItem(amiibo: Amiibo, onFavoriteClick: () -> Unit) {
+fun AmiiboItem(amiibo: Amiibo, onFavoriteClick: () -> Unit, onAddNoteClick: () -> Unit) {
     Row(modifier = Modifier.testTag("amiibo_item_${amiibo.id}")) {
         Text(amiibo.name, modifier = Modifier.weight(1f))
         Text("Series - ${amiibo.amiiboSeries}")
@@ -81,6 +85,15 @@ fun AmiiboItem(amiibo: Amiibo, onFavoriteClick: () -> Unit) {
             Icon(
                 imageVector = if (amiibo.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = "Избранное"
+            )
+        }
+        IconButton(
+            onClick = onAddNoteClick,
+            modifier = Modifier.testTag("addNote_button_${amiibo.id}")
+        ) {
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = "Слздать заметку"
             )
         }
     }

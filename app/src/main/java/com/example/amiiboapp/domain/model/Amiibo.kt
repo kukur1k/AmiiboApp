@@ -11,8 +11,7 @@ data class Amiibo(
     val type: String,
     val imageUrl: String,
     val release: Release?,
-    val isFavorite: Boolean = false,
-    val noteId: String? = null
+    val isFavorite: Boolean = false
 )
 
 data class Release(
@@ -24,6 +23,7 @@ data class Release(
 
 data class Note(
     val id: String,
+    val amiiboId: String,
     val text: String,
     val ratingNote: Int
 )

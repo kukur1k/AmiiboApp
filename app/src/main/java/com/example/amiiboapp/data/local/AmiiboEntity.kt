@@ -5,13 +5,7 @@ import androidx.room3.Entity
 import androidx.room3.ForeignKey
 import androidx.room3.PrimaryKey
 
-@Entity(tableName = "amiibo",
-    foreignKeys = [ForeignKey(
-        entity = NoteAmiiboEntity::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("noteId"),
-        onDelete = ForeignKey.CASCADE
-    )])
+@Entity(tableName = "amiibo")
 data class AmiiboEntity(
     @PrimaryKey val id: String,
     val head: String,
@@ -23,8 +17,7 @@ data class AmiiboEntity(
     val type: String,
     val image: String,
     val isFavorite: Boolean,
-    @Embedded(prefix = "release_") val release: ReleaseEmbedded?,
-    val noteId: String?
+    @Embedded(prefix = "release_") val release: ReleaseEmbedded?
 )
 
 data class ReleaseEmbedded(
@@ -34,8 +27,16 @@ data class ReleaseEmbedded(
     val northAmerica: String?
 )
 
-@Entity(tableName = "note_amiibo")
+@Entity(tableName = "note_amiibo",
+    foreignKeys = [ForeignKey(
+        entity = AmiiboEntity::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("amiiboId"),
+        onDelete = ForeignKey.CASCADE
+    )])
 data class NoteAmiiboEntity(
-    @PrimaryKey val id: String,
-
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val amiiboId: String,
+    val text: String,
+    val ratingNote: Int
 )

@@ -1,8 +1,10 @@
 package com.example.amiiboapp.data.repository
 
+import android.R
 import com.example.amiiboapp.data.remote.AmiiboRemoteDataSource
 import com.example.amiiboapp.data.local.AmiiboLocalDataSource
 import com.example.amiiboapp.domain.model.Amiibo
+import com.example.amiiboapp.domain.model.Note
 import com.example.amiiboapp.domain.model.Release
 import com.example.amiiboapp.domain.repository.AmiiboRepository
 import jakarta.inject.Inject
@@ -32,7 +34,6 @@ class AmiiboRepositoryImpl @Inject constructor(
                         na = it.na
                     ) },
                     isFavorite = false,
-                    noteId = null
                 )
             }
             local.cacheAmiibo(remoteAmiibo)
@@ -45,5 +46,9 @@ class AmiiboRepositoryImpl @Inject constructor(
     override suspend fun toggleFavorite(amiiboId: String) {
         val current = local.getCachedAmiibo().first {it.id == amiiboId}
         local.setFavorite(amiiboId, !current.isFavorite)
+    }
+
+    override suspend fun AddNote(amiiboId: String, text: String, rating: Int){
+        local.insertAmiiboNotes(amiiboId, text, rating)
     }
 }
