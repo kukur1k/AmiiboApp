@@ -9,6 +9,8 @@ class AmiiboLocalDataSource @Inject constructor(private val dao: AmiiboDao) {
     suspend fun getCachedAmiibo(): List<Amiibo> = dao.amiiboAll().first().map { it.toDomain() }
     suspend fun hasCachedAmiibo(): Boolean = dao.count() > 0
 
+    suspend fun getAllNotes(): List<Note> = dao.notesAll().first().map { it.toDomain() }
+
     suspend fun insertAmiiboNotes(amiiboId: String, text: String, rating: Int){
         dao.InsertNote(amiiboId, text, rating)
     }

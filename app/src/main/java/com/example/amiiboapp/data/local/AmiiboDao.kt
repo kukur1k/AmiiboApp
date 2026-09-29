@@ -23,4 +23,7 @@ interface AmiiboDao {
 
     @Query("INSERT INTO note_amiibo(text, ratingNote, amiiboId) values(:text, :ratingNote, :amiiboId)")
     suspend fun InsertNote(amiiboId: String, text: String, ratingNote: Int)
+
+    @Query("SELECT * FROM note_amiibo")
+    fun notesAll(): Flow<List<NoteAmiiboEntity>>
 }

@@ -9,4 +9,6 @@ interface AmiiboRepository {
 
     suspend fun AddNote( amiiboId: String, text: String, rating: Int)
 
+    suspend fun getAllNotes(): List<Note>
+
 }

@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.amiiboapp.presentation.CreateNoteScreen.NoteCreateScreen
 import com.example.amiiboapp.ui.theme.AmiiboAppTheme
 import com.example.amiiboapp.presentation.amiiboList.AmiiboListScreen
+import com.example.amiiboapp.presentation.notes.NotesListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,8 +29,9 @@ class MainActivity : ComponentActivity() {
                     Column(
                         modifier = Modifier.fillMaxSize().padding(top=innerPadding.calculateTopPadding())
                     ) {
-                        AmiiboListScreen()
-
+//                        AmiiboListScreen()
+                        NoteCreateScreen(amiiboId = "09cc010102a50e02")
+//                        NotesListScreen()
                     }
                 }
             }

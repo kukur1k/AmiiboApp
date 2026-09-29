@@ -51,4 +51,8 @@ class AmiiboRepositoryImpl @Inject constructor(
     override suspend fun AddNote(amiiboId: String, text: String, rating: Int){
         local.insertAmiiboNotes(amiiboId, text, rating)
     }
+
+    override suspend fun getAllNotes(): List<Note> {
+        return local.getAllNotes()
+    }
 }

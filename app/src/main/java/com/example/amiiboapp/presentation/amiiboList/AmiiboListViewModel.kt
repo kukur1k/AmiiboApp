@@ -49,6 +49,7 @@ class AmiiboListViewModel @Inject constructor (
         }
     }
 
+    // здесь для теста
     fun insertNote(amiiboId: String, text: String, rating: Int) = viewModelScope.launch {
         withContext(Dispatchers.IO){
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
