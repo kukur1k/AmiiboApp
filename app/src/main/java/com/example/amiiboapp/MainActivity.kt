@@ -12,6 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.amiiboapp.navigation.MainAppScaffold
 import com.example.amiiboapp.presentation.CreateNoteScreen.NoteCreateScreen
 import com.example.amiiboapp.ui.theme.AmiiboAppTheme
 import com.example.amiiboapp.presentation.amiiboList.AmiiboListScreen
@@ -29,9 +32,8 @@ class MainActivity : ComponentActivity() {
                     Column(
                         modifier = Modifier.fillMaxSize().padding(top=innerPadding.calculateTopPadding())
                     ) {
-//                        AmiiboListScreen()
-                        NoteCreateScreen(amiiboId = "09cc010102a50e02")
-//                        NotesListScreen()
+                        val navController = rememberNavController()
+                        MainAppScaffold(navController)
                     }
                 }
             }

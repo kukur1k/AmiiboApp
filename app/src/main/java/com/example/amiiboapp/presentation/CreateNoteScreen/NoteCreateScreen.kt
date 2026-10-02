@@ -19,11 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 
 
 @Composable
 fun NoteCreateScreen(viewModel: NoteCreateViewModel = hiltViewModel(),
-               amiiboId: String) {
+               amiiboId: String, navController: NavHostController) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     uiState.amiiboId = amiiboId

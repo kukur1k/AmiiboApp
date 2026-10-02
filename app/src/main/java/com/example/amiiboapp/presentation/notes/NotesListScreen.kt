@@ -10,12 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.example.amiiboapp.domain.model.Note
 import com.example.amiiboapp.presentation.amiiboList.AmiiboListViewModel
 
 
 @Composable
-fun NotesListScreen(viewModel: NotesViewModel = hiltViewModel()) {
+fun NotesListScreen(viewModel: NotesViewModel = hiltViewModel(), navController: NavController) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
 

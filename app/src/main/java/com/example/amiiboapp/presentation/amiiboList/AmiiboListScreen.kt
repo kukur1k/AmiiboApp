@@ -20,23 +20,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.example.amiiboapp.domain.model.Amiibo
 import com.example.amiiboapp.domain.usecase.SortOrder
+import com.example.amiiboapp.navigation.Screen
 
 @Composable
-fun AmiiboListScreen(viewModel: AmiiboListViewModel = hiltViewModel()) {
+fun AmiiboListScreen(viewModel: AmiiboListViewModel = hiltViewModel(),
+                     navController: NavHostController) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     AmiiboListContent(
         uiState = uiState,
         onFavoriteClick = viewModel::onFavoriteClicked,
         onSortChange = viewModel::onSortOrderChanged,
-        onAddNoteClick = viewModel::insertNote
+        onAddNoteClick = viewModel::insertNote,
+        navController = navController
     )
 }
 
 @Composable
 fun AmiiboListContent(
+    navController: NavHostController,
     uiState: AmiiboListUiState,
     onFavoriteClick: (String) -> Unit,
     onAddNoteClick: (String, String, Int) -> Unit,
@@ -63,7 +68,7 @@ fun AmiiboListContent(
                     AmiiboItem(
                         amiibo = amiibo,
                         onFavoriteClick = {onFavoriteClick(amiibo.id)},
-                        onAddNoteClick = {onAddNoteClick(amiibo.id, "Это заметка", 10)}
+                        onAddNoteClick = {navController.navigate(Screen.NoteForm.passId(amiibo.id))}
                     )
                 }
             }
