@@ -15,7 +15,7 @@ interface AmiiboDao {
     @Query("SELECT COUNT(*) FROM amiibo")
     suspend fun count(): Int
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(amiibo: List<AmiiboEntity>)
 
     @Query("UPDATE amiibo SET isFavorite = :isFavorite WHERE id = :amiiboId")

@@ -7,7 +7,7 @@ import androidx.sqlite.SQLiteConnection
 
 @Database(entities = [
     AmiiboEntity::class,
-    NoteAmiiboEntity::class], version = 3)
+    NoteAmiiboEntity::class], version = 1)
 abstract class AmiiboDatabase : RoomDatabase() {
     abstract fun amiiboDao(): AmiiboDao
 }

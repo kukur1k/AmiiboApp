@@ -7,7 +7,7 @@ import com.example.amiiboapp.domain.model.Amiibo
 import com.example.amiiboapp.domain.model.Note
 import com.example.amiiboapp.domain.model.Release
 import com.example.amiiboapp.domain.repository.AmiiboRepository
-import jakarta.inject.Inject
+import javax.inject.Inject
 import okio.IOException
 
 class AmiiboRepositoryImpl @Inject constructor(
