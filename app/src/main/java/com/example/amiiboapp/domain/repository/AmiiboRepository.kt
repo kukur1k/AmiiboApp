@@ -11,6 +11,8 @@ interface AmiiboRepository {
 
     suspend fun updateCoverImage(noteId: String, sourceUri: String): String
 
+    suspend fun addCoverImage(amiiboId: String, sourceUri: String): String
+
     suspend fun getAllNotes(): List<Note>
 
 }

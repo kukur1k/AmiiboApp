@@ -10,17 +10,33 @@ import javax.inject.Inject
 
 interface ImageStorage {
     suspend fun saveImage(sourceUri: String, noteId: String): String
+
+    suspend fun saveImageCreate(sourceUri: String, noteId: String): String
 }
 
 class AndroidImageStorage @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ImageStorage {
 
-    override suspend fun saveImage(sourceUri: String, amiiboId: String): String =
+    override suspend fun saveImage(sourceUri: String, noteId: String): String =
         withContext(Dispatchers.IO) {
             val uri = sourceUri.toUri()
             val coversDir = File(context.filesDir, "covers").apply { mkdirs() }
-            val destFile = File(coversDir, "$amiiboId.jpg")
+            val destFile = File(coversDir, "${noteId}.jpg")
+
+            context.contentResolver.openInputStream(uri)?.use { input ->
+                destFile.outputStream().use { output -> input.copyTo(output) }
+            } ?: error("Не удалось открыть выбранное изображение")
+
+            destFile.absolutePath
+        }
+
+
+    override suspend fun saveImageCreate(sourceUri: String, amiiboId: String): String =
+        withContext(Dispatchers.IO) {
+            val uri = sourceUri.toUri()
+            val coversDir = File(context.filesDir, "covers").apply { mkdirs() }
+            val destFile = File(coversDir, "${amiiboId}_${System.currentTimeMillis()}.jpg")
 
             context.contentResolver.openInputStream(uri)?.use { input ->
                 destFile.outputStream().use { output -> input.copyTo(output) }

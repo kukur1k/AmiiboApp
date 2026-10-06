@@ -62,4 +62,11 @@ class AmiiboRepositoryImpl @Inject constructor(
         local.updateCoverImage(noteId, savedPath)
         return savedPath
     }
+
+    override suspend fun addCoverImage(amiiboId: String, sourceUri: String): String {
+        val savedPath = imageStorage.saveImageCreate(sourceUri, amiiboId)
+        local.updateCoverImage(amiiboId, savedPath)
+        return savedPath
+    }
+
 }

@@ -45,7 +45,7 @@ fun NoteCreateScreen(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri ->
         if (uri != null) {
-            viewModel.onImageSelected(uri.toString())
+            viewModel.onImageSelected(uri.toString(), amiiboId)
         }
     }
 
@@ -54,7 +54,7 @@ fun NoteCreateScreen(
     ) { success ->
         val uri = pendingCameraUri
         if (success && uri != null) {
-            viewModel.onImageSelected(uri.toString())
+            viewModel.onImageSelected(uri.toString(), amiiboId)
         }
     }
 
@@ -109,7 +109,7 @@ fun NoteCreateScreen(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 viewModel.insertNote(
-                    uiState.amiiboId,
+                    amiiboId,
                     uiState.text,
                     uiState.rating.toInt(),
                     uiState.imagePath
@@ -121,6 +121,6 @@ fun NoteCreateScreen(
             Text("Создать заметку")
         }
 
-        Text(text = "${uiState.errors}", color = Color.Yellow)
+        Text(text = "${uiState.errors}", color = Color.Red)
     }
 }

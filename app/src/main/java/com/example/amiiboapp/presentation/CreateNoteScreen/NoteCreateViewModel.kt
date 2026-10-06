@@ -42,7 +42,19 @@ class NoteCreateViewModel @Inject constructor(
                         }
                 }
 
-        fun onImageSelected(uri: String) {
-                _uiState.update { it.copy(imagePath = uri) }
+        fun onImageSelected(uri: String, amiiboId: String) {
+                viewModelScope.launch {
+                        val result = runCatching {
+                                withContext(Dispatchers.IO) {
+                                        repository.addCoverImage(amiiboId, uri)
+                                }
+                        }
+                        _uiState.update {
+                                result.fold(
+                                        onSuccess = { savedPath -> it.copy(imagePath = savedPath) },
+                                        onFailure = { e -> it.copy(errors = "Ошибка сохранения фото: ${e.message}") }
+                                )
+                        }
+                }
         }
 }
