@@ -2,7 +2,6 @@ package com.example.amiiboapp.presentation.amiiboList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.amiiboapp.domain.model.Note
 import com.example.amiiboapp.domain.repository.AmiiboRepository
 import com.example.amiiboapp.domain.usecase.GetSortedAmiibosUseCase
 import com.example.amiiboapp.domain.usecase.SortOrder
@@ -49,11 +48,4 @@ class AmiiboListViewModel @Inject constructor (
         }
     }
 
-    // здесь для теста
-    fun insertNote(amiiboId: String, text: String, rating: Int) = viewModelScope.launch {
-        withContext(Dispatchers.IO){
-            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            repository.AddNote(amiiboId, text, rating)
-        }
-    }
 }

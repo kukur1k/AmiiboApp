@@ -88,6 +88,7 @@ dependencies {
     implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.coil.compose)
 }
 secrets {
     propertiesFileName = "local.properties"

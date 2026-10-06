@@ -1,5 +1,7 @@
 package com.example.amiiboapp.data.di
 
+import com.example.amiiboapp.data.local.AndroidImageStorage
+import com.example.amiiboapp.data.local.ImageStorage
 import com.example.amiiboapp.data.repository.AmiiboRepositoryImpl
 import com.example.amiiboapp.domain.repository.AmiiboRepository
 import dagger.Binds
@@ -16,4 +18,7 @@ abstract class RepositoryModule {
     abstract fun bindAmiiboRepository(
         impl: AmiiboRepositoryImpl
     ): AmiiboRepository
+
+    @Binds
+    abstract fun bindImageStorage(impl: AndroidImageStorage): ImageStorage
 }

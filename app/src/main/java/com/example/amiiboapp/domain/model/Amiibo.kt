@@ -25,5 +25,6 @@ data class Note(
     val id: String,
     val amiiboId: String,
     val text: String,
-    val ratingNote: Int
+    val ratingNote: Int,
+    val coverImagePath: String? = null
 )

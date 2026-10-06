@@ -34,7 +34,6 @@ fun AmiiboListScreen(viewModel: AmiiboListViewModel = hiltViewModel(),
         uiState = uiState,
         onFavoriteClick = viewModel::onFavoriteClicked,
         onSortChange = viewModel::onSortOrderChanged,
-        onAddNoteClick = viewModel::insertNote,
         navController = navController
     )
 }
@@ -44,7 +43,6 @@ fun AmiiboListContent(
     navController: NavHostController,
     uiState: AmiiboListUiState,
     onFavoriteClick: (String) -> Unit,
-    onAddNoteClick: (String, String, Int) -> Unit,
     onSortChange: (SortOrder) -> Unit
 ) {
     Column() {

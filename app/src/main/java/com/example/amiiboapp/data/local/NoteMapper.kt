@@ -6,7 +6,8 @@ fun NoteAmiiboEntity.toDomain() = Note(
     id = id.toString(),
     text = text,
     ratingNote = ratingNote,
-    amiiboId = amiiboId
+    amiiboId = amiiboId,
+    coverImagePath = coverImagePath
 )
 
 fun Note.toEntity() = NoteAmiiboEntity(
@@ -14,4 +15,5 @@ fun Note.toEntity() = NoteAmiiboEntity(
     amiiboId = amiiboId,
     text = text,
     ratingNote = ratingNote,
+    coverImagePath = coverImagePath
 )

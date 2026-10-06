@@ -7,5 +7,6 @@ data class NoteCreateUiState(
     var amiiboId: String = "",
     val text: String = "",
     val rating: String = "0",
+    val imagePath: String = "",
     val errors: String = ""
 )

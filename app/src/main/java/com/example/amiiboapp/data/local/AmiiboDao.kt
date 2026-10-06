@@ -21,9 +21,12 @@ interface AmiiboDao {
     @Query("UPDATE amiibo SET isFavorite = :isFavorite WHERE id = :amiiboId")
     suspend fun setFavorite(amiiboId: String, isFavorite: Boolean)
 
-    @Query("INSERT INTO note_amiibo(text, ratingNote, amiiboId) values(:text, :ratingNote, :amiiboId)")
-    suspend fun InsertNote(amiiboId: String, text: String, ratingNote: Int)
+    @Query("INSERT INTO note_amiibo(text, ratingNote, amiiboId, coverImagePath) values(:text, :ratingNote, :amiiboId, :imagePath)")
+    suspend fun InsertNote(amiiboId: String, text: String, ratingNote: Int, imagePath: String?)
 
     @Query("SELECT * FROM note_amiibo")
     fun notesAll(): Flow<List<NoteAmiiboEntity>>
+
+    @Query("UPDATE note_amiibo SET coverImagePath = :path WHERE id = :noteId")
+    suspend fun updateCoverImage(noteId: String, path: String)
 }

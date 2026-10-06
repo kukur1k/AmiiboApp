@@ -1,8 +1,8 @@
 package com.example.amiiboapp.data.repository
 
-import android.R
 import com.example.amiiboapp.data.remote.AmiiboRemoteDataSource
 import com.example.amiiboapp.data.local.AmiiboLocalDataSource
+import com.example.amiiboapp.data.local.ImageStorage
 import com.example.amiiboapp.domain.model.Amiibo
 import com.example.amiiboapp.domain.model.Note
 import com.example.amiiboapp.domain.model.Release
@@ -12,7 +12,8 @@ import okio.IOException
 
 class AmiiboRepositoryImpl @Inject constructor(
     private val remote: AmiiboRemoteDataSource,
-    private val local: AmiiboLocalDataSource
+    private val local: AmiiboLocalDataSource,
+    private val imageStorage: ImageStorage
 ): AmiiboRepository {
     override suspend fun getAllAmiibo(): List<Amiibo> {
         return try{
@@ -48,11 +49,17 @@ class AmiiboRepositoryImpl @Inject constructor(
         local.setFavorite(amiiboId, !current.isFavorite)
     }
 
-    override suspend fun AddNote(amiiboId: String, text: String, rating: Int){
-        local.insertAmiiboNotes(amiiboId, text, rating)
+    override suspend fun AddNote(amiiboId: String, text: String, rating: Int, imagePath: String?){
+        local.insertAmiiboNotes(amiiboId, text, rating, imagePath)
     }
 
     override suspend fun getAllNotes(): List<Note> {
         return local.getAllNotes()
+    }
+
+    override suspend fun updateCoverImage(noteId: String, sourceUri: String): String {
+        val savedPath = imageStorage.saveImage(sourceUri, noteId)
+        local.updateCoverImage(noteId, savedPath)
+        return savedPath
     }
 }

@@ -38,5 +38,6 @@ data class NoteAmiiboEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val amiiboId: String,
     val text: String,
-    val ratingNote: Int
+    val ratingNote: Int,
+    val coverImagePath: String? = null
 )
