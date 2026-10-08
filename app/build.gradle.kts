@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.coil.compose)
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
 }
 secrets {
     propertiesFileName = "local.properties"

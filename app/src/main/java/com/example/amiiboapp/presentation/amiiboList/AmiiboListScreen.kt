@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -52,22 +53,12 @@ fun AmiiboListScreen(viewModel: AmiiboListViewModel = hiltViewModel(),
                      navController: NavHostController) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Box(modifier = Modifier.fillMaxSize()){
-        Image(
-            painter = painterResource(id = R.drawable.img_1),
-            contentDescription = "back",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-
         AmiiboListContent(
             uiState = uiState,
             onFavoriteClick = viewModel::onFavoriteClicked,
             onSortChange = viewModel::onSortOrderChanged,
             navController = navController
         )
-    }
-
 
 }
 
@@ -131,7 +122,7 @@ fun AmiiboItem(amiibo: Amiibo, onFavoriteClick: () -> Unit, onAddNoteClick: () -
             AsyncImage(
                 model = amiibo.imageUrl,
                 contentDescription = amiibo.name,
-                modifier = Modifier.size(120.dp).fillMaxSize(),
+                modifier = Modifier.size(120.dp).fillMaxSize().clip(CircleShape),
                 contentScale = ContentScale.Crop,
                 error = painterResource(R.drawable.logo)
             )
