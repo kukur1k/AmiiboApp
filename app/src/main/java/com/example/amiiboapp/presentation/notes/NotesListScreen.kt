@@ -51,7 +51,7 @@ fun NoteItem(note: Note){
             Text(text = note.amiiboId, modifier = Modifier.padding(10.dp))
         }
         AsyncImage(
-            model = note.coverImagePath ?: R.drawable.chess_svgrepo_com,
+            model = note.coverImagePath ?: R.drawable.logo,
             contentDescription = "фото",
             modifier = Modifier.size(56.dp),
             contentScale = ContentScale.Crop
