@@ -29,4 +29,7 @@ interface AmiiboDao {
 
     @Query("UPDATE note_amiibo SET coverImagePath = :path WHERE id = :noteId")
     suspend fun updateCoverImage(noteId: String, path: String)
+
+    @Query("DELETE FROM note_amiibo WHERE id = :id")
+    suspend fun DropNote(id: String)
 }

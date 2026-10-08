@@ -32,5 +32,10 @@ class NotesViewModel @Inject constructor(
                 _uiState.update { it.copy( notes = notes, isLoading = false) }
         }
 
+          fun deleteNote(noteId: String) = viewModelScope.launch{
+                repository.DropNote(noteId)
+                loadNotes()
+        }
+
 
 }

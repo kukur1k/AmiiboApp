@@ -69,4 +69,8 @@ class AmiiboRepositoryImpl @Inject constructor(
         return savedPath
     }
 
+    override suspend fun DropNote(noteId: String) {
+        local.dropNote(noteId)
+    }
+
 }

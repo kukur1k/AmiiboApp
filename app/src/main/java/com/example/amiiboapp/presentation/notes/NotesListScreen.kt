@@ -1,6 +1,7 @@
 package com.example.amiiboapp.presentation.notes
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,11 +15,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +36,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.amiiboapp.R
@@ -42,7 +46,7 @@ import com.example.amiiboapp.domain.model.Note
 @Composable
 fun NotesListScreen(
     viewModel: NotesViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val notes = uiState.notes
@@ -53,7 +57,7 @@ fun NotesListScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(notes, key = { it.id }) { note ->
-            NoteCard(note = note)
+            NoteCard(note = note, onDeleteClick = { viewModel.deleteNote(note.id) })
         }
     }
 }
@@ -62,7 +66,9 @@ fun NotesListScreen(
 @Composable
 fun NoteCard(
     note: Note,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDeleteClick: () -> Unit
+
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -73,7 +79,8 @@ fun NoteCard(
         )
     ) {
         Column {
-            if (note.coverImagePath != null){
+            // Картинка + кнопка удаления поверх неё
+            Box {
                 AsyncImage(
                     model = note.coverImagePath ?: R.drawable.logo,
                     contentDescription = "Обложка заметки",
@@ -83,6 +90,19 @@ fun NoteCard(
                         .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
                     contentScale = ContentScale.Crop
                 )
+
+                IconButton(
+                    onClick = onDeleteClick,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Удалить заметку",
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                }
             }
 
 

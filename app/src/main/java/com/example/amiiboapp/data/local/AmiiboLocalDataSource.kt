@@ -11,6 +11,8 @@ class AmiiboLocalDataSource @Inject constructor(private val dao: AmiiboDao) {
 
     suspend fun getAllNotes(): List<Note> = dao.notesAll().first().map { it.toDomain() }
 
+    suspend fun dropNote(noteId: String) = dao.DropNote(noteId)
+
     suspend fun updateCoverImage(noteId: String, savedPath: String) = dao.updateCoverImage(noteId, savedPath)
     suspend fun insertAmiiboNotes(amiiboId: String, text: String, rating: Int, imagePath: String?){
         dao.InsertNote(amiiboId, text, rating, imagePath)
