@@ -3,6 +3,9 @@ package com.example.amiiboapp.presentation.CreateNoteScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.amiiboapp.domain.repository.AmiiboRepository
+import com.example.amiiboapp.domain.usecase.NoteCreateErrors
+import com.example.amiiboapp.domain.usecase.ValidateNoteUseCase
+import com.example.amiiboapp.domain.usecase.ValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,22 +28,16 @@ class NoteCreateViewModel @Inject constructor(
                 _uiState.value = newState
         }
 
-        fun insertNote(amiiboId: String, text: String, rating: Int, imagePath: String) =
+        fun insertNote(amiiboId: String, text: String, rating: Int, imagePath: String){
+
                 viewModelScope.launch {
                         val result = runCatching {
                                 withContext(Dispatchers.IO) {
                                         repository.AddNote(amiiboId, text, rating, imagePath)
                                 }
                         }
-                        _uiState.update {
-                                it.copy(
-                                        errors = result.fold(
-                                                onSuccess = { "Заметка успешно добавлена" },
-                                                onFailure = { e -> "Ошибка: ${e.message}" }
-                                        )
-                                )
-                        }
                 }
+        }
 
         fun onImageSelected(uri: String, amiiboId: String) {
                 viewModelScope.launch {
@@ -49,12 +46,35 @@ class NoteCreateViewModel @Inject constructor(
                                         repository.addCoverImage(amiiboId, uri)
                                 }
                         }
-                        _uiState.update {
-                                result.fold(
-                                        onSuccess = { savedPath -> it.copy(imagePath = savedPath) },
-                                        onFailure = { e -> it.copy(errors = "Ошибка сохранения фото: ${e.message}") }
-                                )
-                        }
+//                        _uiState.update {
+//                                result.fold(
+//                                        onSuccess = { savedPath -> it.copy(imagePath = savedPath) },
+//                                        onFailure = { e -> it.copy(errors = "Ошибка сохранения фото: ${e.message}") }
+//                                )
+//                        }
                 }
         }
+
+
+        fun GetErrorsLine(errors: NoteCreateErrors?): String? {
+
+                var error: String? = ""
+                var isValid = true
+
+                if (errors?.starsCount != null){
+                        error = errors.starsCount
+                        isValid = false
+                }
+
+                if (errors?.emptyText != null){
+                        error = errors.emptyText
+                        isValid = false
+                }
+
+                if (isValid == true){
+                        error = "Заметка успешно создана"
+                }
+                return error
+        }
+
 }

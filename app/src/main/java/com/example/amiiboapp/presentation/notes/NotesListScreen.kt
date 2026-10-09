@@ -1,5 +1,6 @@
 package com.example.amiiboapp.presentation.notes
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,10 +31,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.keepScreenOn
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -51,15 +55,30 @@ fun NotesListScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val notes = uiState.notes
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(notes, key = { it.id }) { note ->
-            NoteCard(note = note, onDeleteClick = { viewModel.deleteNote(note.id) })
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(20.dp))
+            .background(Color(0xFFF6F6F8))
+            .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Список заметок", fontSize = 19.sp, textAlign = TextAlign.Center, fontWeight = FontWeight.SemiBold)
         }
+
+        Spacer(modifier = Modifier.height(15.dp))
+
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(notes, key = { it.id }) { note ->
+                NoteCard(note = note, onDeleteClick = { viewModel.deleteNote(note.id) })
+            }
+        }
+
     }
+
+
 }
 
 
@@ -79,11 +98,10 @@ fun NoteCard(
         )
     ) {
         Column {
-            // Картинка + кнопка удаления поверх неё
             Box {
                 AsyncImage(
                     model = note.coverImagePath ?: R.drawable.logo,
-                    contentDescription = "Обложка заметки",
+                    contentDescription = "",
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
@@ -99,7 +117,7 @@ fun NoteCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Удалить заметку",
+                        contentDescription = "",
                         tint = MaterialTheme.colorScheme.error
                     )
                 }

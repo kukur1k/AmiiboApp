@@ -9,10 +9,6 @@ class GetSortedAmiibosUseCase @Inject constructor(
 ){
     suspend operator fun invoke(sortBy: SortOrder): List<Amiibo> {
         val amiibos = repository.getAllAmiibo()
-        // логи для теста
-//        amiibos.forEach { amiibo ->
-//            android.util.Log.d("AmiiboUseCase", "It ${amiibo.name} items")
-//        }
 
         return when (sortBy) {
             SortOrder.CHARACTER -> amiibos.sortedBy{ it.character }

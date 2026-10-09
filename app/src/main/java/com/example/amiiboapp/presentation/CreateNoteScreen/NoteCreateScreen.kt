@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.foundation.layout.Row
@@ -16,6 +18,7 @@ import coil3.compose.AsyncImage
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +29,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -76,73 +81,102 @@ fun NoteCreateScreen(
         }
     }
 
-    Column(modifier = Modifier.padding(12.dp).fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        OutlinedTextField(
-            value = uiState.text,
-            onValueChange = { viewModel.updateState(uiState.copy(text = it)) },
-            label = { Text("текст") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(Modifier.height(16.dp))
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(20.dp))
+            .background(Color(0xFFF6F6F8))
+            .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Создание заметки", fontSize = 19.sp, textAlign = TextAlign.Center, fontWeight = FontWeight.SemiBold)
+        }
 
-        OutlinedTextField(
-            value = uiState.rating,
-            onValueChange = { viewModel.updateState(uiState.copy(rating = it)) },
-            label = { Text("Личный рейтинг") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
-        Row {
-            Button(onClick = {
-                pickImageLauncher.launch(
-                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                )
-            }) {
-                Text("Из галереи")
+        Column(modifier = Modifier.padding(12.dp).fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+            OutlinedTextField(
+                value = uiState.text,
+                onValueChange = { viewModel.updateState(uiState.copy(text = it)) },
+                label = { Text("текст") },
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(18.dp)).background(Color.White)
+            )
+            Spacer(Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = uiState.rating,
+                onValueChange = { viewModel.updateState(uiState.copy(rating = it)) },
+                label = { Text("Личный рейтинг") },
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(18.dp)).background(Color.White)
+            )
+            Spacer(Modifier.height(16.dp))
+
+            Row {
+                Button(onClick = {
+                    pickImageLauncher.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    )
+                }) {
+                    Text("Из галереи",)
+                }
+                Spacer(Modifier.size(8.dp))
+                Button(onClick = {
+                    cameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+                }) {
+                    Text("С камеры")
+                }
             }
-            Spacer(Modifier.size(8.dp))
-            Button(onClick = {
-                cameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
-            }) {
-                Text("С камеры")
+
+
+            Spacer(Modifier.height(16.dp))
+
+            Column(modifier = Modifier
+                .clip(RoundedCornerShape(18.dp))
+                .background(Color.White).alpha(0.5f)
+                .padding(10.dp)) {
+
+                Text(text = "Выбранное фото:",
+                    fontSize = 17.sp,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold
+                )
+                AsyncImage(
+                    model = uiState.imagePath ?: R.drawable.logo,
+                    contentDescription = "фото",
+                    modifier = Modifier.size(56.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+
+
+
+
+            Spacer(Modifier.height(16.dp))
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    viewModel.insertNote(
+                        amiiboId,
+                        uiState.text,
+                        uiState.rating.toInt(),
+                        uiState.imagePath
+                    )
+                },
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3361E0))
+            ) {
+                Text("Создать заметку")
+            }
+
+            viewModel.GetErrorsLine(uiState.errors)?.let {
+                Text(text = it,
+                    color = Color(0xFF42124D),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
 
-
-        Spacer(Modifier.height(16.dp))
-        Text(text = "Выбранное фото:",
-            fontSize = 17.sp,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.SemiBold
-        )
-        AsyncImage(
-            model = uiState.imagePath ?: R.drawable.logo,
-            contentDescription = "фото",
-            modifier = Modifier.size(56.dp),
-            contentScale = ContentScale.Crop
-        )
-
-
-
-        Spacer(Modifier.height(16.dp))
-
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = {
-                viewModel.insertNote(
-                    amiiboId,
-                    uiState.text,
-                    uiState.rating.toInt(),
-                    uiState.imagePath
-                )
-            },
-            shape = RoundedCornerShape(15.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3361E0))
-        ) {
-            Text("Создать заметку")
-        }
-
-        Text(text = "${uiState.errors}", color = Color.Red)
     }
+
+
 }
+
