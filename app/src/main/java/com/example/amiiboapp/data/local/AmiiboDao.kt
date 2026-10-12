@@ -21,8 +21,8 @@ interface AmiiboDao {
     @Query("UPDATE amiibo SET isFavorite = :isFavorite WHERE id = :amiiboId")
     suspend fun setFavorite(amiiboId: String, isFavorite: Boolean)
 
-    @Query("INSERT INTO note_amiibo(text, ratingNote, amiiboId, coverImagePath) values(:text, :ratingNote, :amiiboId, :imagePath)")
-    suspend fun InsertNote(amiiboId: String, text: String, ratingNote: Int, imagePath: String?)
+    @Insert()
+    suspend fun InsertNote(note: NoteAmiiboEntity)
 
     @Query("SELECT * FROM note_amiibo")
     fun notesAll(): Flow<List<NoteAmiiboEntity>>

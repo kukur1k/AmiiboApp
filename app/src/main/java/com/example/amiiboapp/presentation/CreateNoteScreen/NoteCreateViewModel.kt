@@ -2,6 +2,7 @@ package com.example.amiiboapp.presentation.CreateNoteScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.amiiboapp.domain.model.Note
 import com.example.amiiboapp.domain.repository.AmiiboRepository
 import com.example.amiiboapp.domain.usecase.NoteCreateErrors
 import com.example.amiiboapp.domain.usecase.ValidateNoteUseCase
@@ -28,12 +29,30 @@ class NoteCreateViewModel @Inject constructor(
                 _uiState.value = newState
         }
 
-        fun insertNote(amiiboId: String, text: String, rating: Int, imagePath: String){
+        fun insertNote(amiiboId: String){
 
                 viewModelScope.launch {
                         val result = runCatching {
                                 withContext(Dispatchers.IO) {
-                                        repository.AddNote(amiiboId, text, rating, imagePath)
+                                        val newNote = Note(amiiboId = amiiboId,
+                                                text = uiState.value.text,
+                                                ratingNote = uiState.value.rating.toInt(),
+                                                coverImagePath = uiState.value.imagePath)
+
+                                        val validator = ValidateNoteUseCase()
+                                        val result = validator(newNote)
+                                        if (!result.isValid){
+                                                _uiState.update { it.copy(errors = result.errors) }
+                                        } else{
+                                                viewModelScope.launch {
+                                                        repository.AddNote(newNote)
+                                                        _uiState.update { it.copy(errors = NoteCreateErrors()) }
+                                                        _uiState.update { it.copy(text = "", rating = "", imagePath = "") }
+                                                }
+                                        }
+
+
+
                                 }
                         }
                 }
@@ -46,12 +65,12 @@ class NoteCreateViewModel @Inject constructor(
                                         repository.addCoverImage(amiiboId, uri)
                                 }
                         }
-//                        _uiState.update {
-//                                result.fold(
-//                                        onSuccess = { savedPath -> it.copy(imagePath = savedPath) },
-//                                        onFailure = { e -> it.copy(errors = "Ошибка сохранения фото: ${e.message}") }
-//                                )
-//                        }
+                        _uiState.update {
+                                result.fold(
+                                        onSuccess = { savedPath -> it.copy(imagePath = savedPath) },
+                                        onFailure = { e -> it.copy(errors = NoteCreateErrors(emptyText = "Ошибка загрузки фото: ${e.toString()}")) }
+                                )
+                        }
                 }
         }
 

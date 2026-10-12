@@ -154,10 +154,7 @@ fun NoteCreateScreen(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     viewModel.insertNote(
-                        amiiboId,
-                        uiState.text,
-                        uiState.rating.toInt(),
-                        uiState.imagePath
+                        amiiboId
                     )
                 },
                 shape = RoundedCornerShape(15.dp),

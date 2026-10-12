@@ -11,7 +11,7 @@ fun NoteAmiiboEntity.toDomain() = Note(
 )
 
 fun Note.toEntity() = NoteAmiiboEntity(
-    id = id.toLong(),
+    id = id.toLongOrNull() ?: 0L,
     amiiboId = amiiboId,
     text = text,
     ratingNote = ratingNote,

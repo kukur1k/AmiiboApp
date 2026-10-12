@@ -49,8 +49,8 @@ class AmiiboRepositoryImpl @Inject constructor(
         local.setFavorite(amiiboId, !current.isFavorite)
     }
 
-    override suspend fun AddNote(amiiboId: String, text: String, rating: Int, imagePath: String?){
-        local.insertAmiiboNotes(amiiboId, text, rating, imagePath)
+    override suspend fun AddNote(note: Note){
+        local.insertAmiiboNotes(note)
     }
 
     override suspend fun getAllNotes(): List<Note> {
