@@ -9,16 +9,6 @@ interface AmiiboRepository {
     suspend fun getAmiiboById(amiiboId: String): Amiibo?
     suspend fun toggleFavorite(amiiboId: String)
 
-    suspend fun AddNote(note: Note)
-
-    suspend fun DropNote(noteId: String)
-
-    suspend fun updateCoverImage(noteId: String, sourceUri: String): String
-
-    suspend fun addCoverImage(amiiboId: String, sourceUri: String): String
-
-    suspend fun getAllNotes(): List<Note>
-
 
 
 }

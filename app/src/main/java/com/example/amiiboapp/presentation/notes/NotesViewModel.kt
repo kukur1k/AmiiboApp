@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.amiiboapp.domain.model.Amiibo
 import com.example.amiiboapp.domain.repository.AmiiboRepository;
+import com.example.amiiboapp.domain.repository.NoteRepository
 import com.example.amiiboapp.presentation.amiiboList.AmiiboListUiState
 
 import javax.inject.Inject;
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(
-        private val repository: AmiiboRepository
+        private val repository: NoteRepository
 ): ViewModel() {
         private val _uiState = MutableStateFlow(NotesListUiState())
         val uiState: StateFlow<NotesListUiState> = _uiState.asStateFlow()

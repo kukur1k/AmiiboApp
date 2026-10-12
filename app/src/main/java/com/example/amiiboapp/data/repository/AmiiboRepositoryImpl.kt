@@ -60,28 +60,8 @@ class AmiiboRepositoryImpl @Inject constructor(
         local.setFavorite(amiiboId, !current.isFavorite)
     }
 
-    override suspend fun AddNote(note: Note){
-        local.insertAmiiboNotes(note)
-    }
 
-    override suspend fun getAllNotes(): List<Note> {
-        return local.getAllNotes()
-    }
 
-    override suspend fun updateCoverImage(noteId: String, sourceUri: String): String {
-        val savedPath = imageStorage.saveImage(sourceUri, noteId)
-        local.updateCoverImage(noteId, savedPath)
-        return savedPath
-    }
 
-    override suspend fun addCoverImage(amiiboId: String, sourceUri: String): String {
-        val savedPath = imageStorage.saveImageCreate(sourceUri, amiiboId)
-        local.updateCoverImage(amiiboId, savedPath)
-        return savedPath
-    }
-
-    override suspend fun DropNote(noteId: String) {
-        local.dropNote(noteId)
-    }
 
 }

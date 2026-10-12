@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.amiiboapp.domain.model.Note
 import com.example.amiiboapp.domain.repository.AmiiboRepository
+import com.example.amiiboapp.domain.repository.NoteRepository
 import com.example.amiiboapp.domain.usecase.NoteCreateErrors
 import com.example.amiiboapp.domain.usecase.ValidateNoteUseCase
 import com.example.amiiboapp.domain.usecase.ValidationResult
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoteCreateViewModel @Inject constructor(
-        private val repository: AmiiboRepository
+        private val repository: NoteRepository
 ) : ViewModel() {
 
         private val _uiState = MutableStateFlow(NoteCreateUiState())
