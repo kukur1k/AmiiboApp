@@ -15,6 +15,17 @@ class AmiiboRepositoryImpl @Inject constructor(
     private val local: AmiiboLocalDataSource,
     private val imageStorage: ImageStorage
 ): AmiiboRepository {
+    override suspend fun getAmiiboById(amiiboId: String): Amiibo? {
+        val all = getAllAmiibo()
+        var amiiboIt: Amiibo? = null
+        all.forEach { amiibo ->
+            if (amiibo.id == amiiboId) {
+                amiiboIt = amiibo
+            }
+        }
+        return amiiboIt
+    }
+
     override suspend fun getAllAmiibo(): List<Amiibo> {
         return try{
             val remoteAmiibo = remote.fetchAmiibo().map { dto ->

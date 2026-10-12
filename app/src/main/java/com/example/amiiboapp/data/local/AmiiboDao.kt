@@ -12,6 +12,7 @@ interface AmiiboDao {
     @Query("SELECT * FROM amiibo")
     fun amiiboAll(): Flow<List<AmiiboEntity>>
 
+
     @Query("SELECT COUNT(*) FROM amiibo")
     suspend fun count(): Int
 

@@ -3,6 +3,7 @@ package com.example.amiiboapp.presentation.notes;
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.amiiboapp.domain.model.Amiibo
 import com.example.amiiboapp.domain.repository.AmiiboRepository;
 import com.example.amiiboapp.presentation.amiiboList.AmiiboListUiState
 
@@ -36,6 +37,7 @@ class NotesViewModel @Inject constructor(
                 repository.DropNote(noteId)
                 loadNotes()
         }
+
 
 
 }
