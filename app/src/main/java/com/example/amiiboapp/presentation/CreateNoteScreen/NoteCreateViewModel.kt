@@ -43,12 +43,14 @@ class NoteCreateViewModel @Inject constructor(
                                         val result = validator(newNote)
                                         if (!result.isValid){
                                                 _uiState.update { it.copy(errors = result.errors) }
+                                        } else{
+                                                viewModelScope.launch {
+                                                        repository.AddNote(newNote)
+                                                        _uiState.update { it.copy(errors = NoteCreateErrors()) }
+                                                        _uiState.update { it.copy(text = "", rating = "", imagePath = "") }
+                                                }
                                         }
-                                        viewModelScope.launch {
-                                                repository.AddNote(newNote)
-                                                _uiState.update { it.copy(errors = NoteCreateErrors()) }
-                                                _uiState.update { it.copy(text = "", rating = "", imagePath = "") }
-                                        }
+
 
 
 

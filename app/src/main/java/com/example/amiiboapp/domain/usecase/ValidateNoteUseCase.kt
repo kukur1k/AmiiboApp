@@ -14,10 +14,10 @@ class ValidateNoteUseCase {
 
         if (note.text == "" ){
             isValid = false
-            errors.starsCount = "Текст не должен быть пустым"
+            errors.emptyText = "Текст не должен быть пустым"
         }
 
-        return ValidationResult(false, errors)
+        return ValidationResult(isValid, errors)
     }
 
 
