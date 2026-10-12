@@ -43,13 +43,13 @@ class NoteCreateViewModel @Inject constructor(
                                         val result = validator(newNote)
                                         if (!result.isValid){
                                                 _uiState.update { it.copy(errors = result.errors) }
-                                        } else{
-                                                viewModelScope.launch {
-                                                        repository.AddNote(newNote)
-                                                        _uiState.update { it.copy(errors = NoteCreateErrors()) }
-                                                        _uiState.update { it.copy(text = "", rating = "", imagePath = "") }
-                                                }
                                         }
+                                        viewModelScope.launch {
+                                                repository.AddNote(newNote)
+                                                _uiState.update { it.copy(errors = NoteCreateErrors()) }
+                                                _uiState.update { it.copy(text = "", rating = "", imagePath = "") }
+                                        }
+
 
 
 
@@ -80,6 +80,7 @@ class NoteCreateViewModel @Inject constructor(
                 var error: String? = ""
                 var isValid = true
 
+
                 if (errors?.starsCount != null){
                         error = errors.starsCount
                         isValid = false
@@ -89,6 +90,8 @@ class NoteCreateViewModel @Inject constructor(
                         error = errors.emptyText
                         isValid = false
                 }
+
+                if (errors?.emptyText == null && errors?.starsCount == null && !isValid) return ""
 
                 if (isValid == true){
                         error = "Заметка успешно создана"

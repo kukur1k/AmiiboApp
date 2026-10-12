@@ -9,5 +9,5 @@ data class NoteCreateUiState(
     val text: String = "",
     val rating: String = "0",
     val imagePath: String = "",
-    val errors: NoteCreateErrors? = null
+    val errors: NoteCreateErrors? = NoteCreateErrors("Заполните все поля")
 )
