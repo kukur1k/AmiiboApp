@@ -23,8 +23,6 @@ class ValidateNoteUseCase {
 
 }
 
-
-
 data class ValidationResult(
     val isValid: Boolean,
     val errors:  NoteCreateErrors

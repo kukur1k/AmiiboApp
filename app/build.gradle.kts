@@ -94,3 +94,7 @@ dependencies {
 secrets {
     propertiesFileName = "local.properties"
 }
+
+tasks.matching { it.name.startsWith("ksp") && it.name.contains("UnitTest") }.configureEach {
+    enabled = false
+}
