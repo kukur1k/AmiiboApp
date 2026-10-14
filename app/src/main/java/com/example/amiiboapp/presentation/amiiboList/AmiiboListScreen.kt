@@ -129,8 +129,8 @@ fun AmiiboItem(amiibo: Amiibo, onFavoriteClick: () -> Unit, onAddNoteClick: () -
             )
 
             Column(modifier = Modifier.testTag("amiibo_item_${amiibo.id}")) {
-                Text(amiibo.name)
-                Text("Series - ${amiibo.amiiboSeries}")
+                Text(amiibo.name, modifier = Modifier.weight(1f).testTag(amiibo.name))
+                Text("Series - ${amiibo.amiiboSeries}", modifier = Modifier.weight(1f).testTag("Series - ${amiibo.name}"))
                 Row(modifier = Modifier.padding(10.dp)) {
                     IconButton(
                         onClick = onFavoriteClick,
