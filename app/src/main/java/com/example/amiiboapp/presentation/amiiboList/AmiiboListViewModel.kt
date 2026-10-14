@@ -41,7 +41,6 @@ class AmiiboListViewModel @Inject constructor (
         _uiState.update { it.copy(isLoading = true, errorMessage = null) }
         try {
             val amiibo = getSortedAmiibosUseCase(_uiState.value.sortOrder)
-            android.util.Log.d("AmiiboVM", "loaded ${amiibo.size} items")
             _uiState.update { it.copy(isLoading = false, amiibo = amiibo) }
         } catch (ex: Exception){
             _uiState.update { it.copy(isLoading = false, errorMessage = "Ошибка загрузки Amiibo" + ex.message.toString()) }

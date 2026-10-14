@@ -11,23 +11,25 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestWatcher
+import kotlin.math.log
 
 class AmiiboListViewModelLoadingTest {
 
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule(StandardTestDispatcher())
+    val mainDispatcherRule = MainDispatcherRule()
 
     @Test
-    fun isLoadingTrueBeforeAndAfter() = runTest{
+    fun isLoadingTrueBeforeAndAfter() = runTest(mainDispatcherRule.dispatcher){
         val fake = FakeAmiiboRepository().apply { setAmiibo(listOf(Amiibo("1", "1", "0", "TesterAmiibo",
             "TesterAmiiboCharacter", "testSeries", "testAmiiboSeries", "test", "test_image",
             Release(null, null, null, null), true))) }
 
-        Debug.Tra("FAKE SIZE = ${fake.getAllAmiibo().size}")
 
         val viewModel = AmiiboListViewModel(GetSortedAmiibosUseCase(fake), fake)
 
@@ -35,7 +37,6 @@ class AmiiboListViewModelLoadingTest {
             assertTrue(awaitItem().isLoading)
             advanceUntilIdle()
             val loaded = awaitItem()
-            Trace.("LOADED = $loaded")
             assertFalse(loaded.isLoading)
             assertEquals(1, loaded.amiibo.size)
             cancelAndIgnoreRemainingEvents()
