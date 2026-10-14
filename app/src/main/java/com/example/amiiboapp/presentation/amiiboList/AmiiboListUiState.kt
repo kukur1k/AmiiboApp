@@ -5,7 +5,7 @@ import com.example.amiiboapp.domain.usecase.SortOrder
 
 data class AmiiboListUiState(
     val amiibo: List<Amiibo> = emptyList(),
-    val isLoading: Boolean = false,
+        val isLoading: Boolean = true,
     val errorMessage: String? = null,
     val sortOrder: SortOrder = SortOrder.NAME
 )

@@ -98,3 +98,10 @@ secrets {
 tasks.matching { it.name.startsWith("ksp") && it.name.contains("UnitTest") }.configureEach {
     enabled = false
 }
+
+tasks.withType<Test> {
+    testLogging {
+        showStandardStreams = true
+        events("passed", "skipped", "failed", "standardOut", "standardError")
+    }
+}
