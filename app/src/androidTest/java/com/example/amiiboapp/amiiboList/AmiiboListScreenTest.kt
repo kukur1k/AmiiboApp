@@ -60,7 +60,7 @@ class AmiiboListScreenTest {
     @Test
     fun ShowSeriesAmiibo() {
         setContent()
-        composeTestRule.onNodeWithText("Series - testSeries").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Series - testAmiiboSeries").assertIsDisplayed()
     }
 
     @Test

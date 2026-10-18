@@ -118,7 +118,8 @@ fun AmiiboItem(amiibo: Amiibo, onFavoriteClick: () -> Unit, onAddNoteClick: () -
         .padding(10.dp)
 
         , horizontalAlignment = Alignment.CenterHorizontally) {
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.fillMaxWidth()) {
 
             AsyncImage(
                 model = amiibo.imageUrl,
@@ -128,9 +129,9 @@ fun AmiiboItem(amiibo: Amiibo, onFavoriteClick: () -> Unit, onAddNoteClick: () -
                 error = painterResource(R.drawable.logo)
             )
 
-            Column(modifier = Modifier.testTag("amiibo_item_${amiibo.id}")) {
-                Text(amiibo.name, modifier = Modifier.weight(1f).testTag(amiibo.name))
-                Text("Series - ${amiibo.amiiboSeries}", modifier = Modifier.weight(1f).testTag("Series - ${amiibo.name}"))
+            Column(modifier = Modifier.weight(1f).testTag("amiibo_item_${amiibo.id}")) {
+                Text(amiibo.name, modifier = Modifier.testTag(amiibo.name))
+                Text("Series - ${amiibo.amiiboSeries}", modifier = Modifier.testTag("Series - ${amiibo.amiiboSeries}"))
                 Row(modifier = Modifier.padding(10.dp)) {
                     IconButton(
                         onClick = onFavoriteClick,
